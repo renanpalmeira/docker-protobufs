@@ -32,7 +32,7 @@ jobs:
         run: |-
           set -e
           docker buildx build $(cat .versions | sed 's@^@--build-arg @g ') \
-            --tag ghcr.io/renanpalmeira/protobuf:latest \
+            --tag ghcr.io/${{ github.repository_owner }}/protobuf:latest \
             --target protobuf \
             --platform linux/amd64 \
             --file Dockerfile \

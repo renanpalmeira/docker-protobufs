@@ -1,0 +1,12 @@
+#!/bin/sh
+
+docker run --rm \
+    --name dev-protos \
+    -u $(id -u):$(id -u) \
+    -v `pwd`:/code \
+    protobuf:latest \
+        --proto_path=/code/api/v1 \
+        --grpc-gateway_out=logtostderr=true,paths=source_relative:/code/api/v1/genproto \
+        --openapiv2_out=json_names_for_fields=false:/code/api/v1/swagger \
+        --go_out=plugins=grpc,paths=source_relative:/code/api/v1/genproto \
+        /code/api/**/*.proto
