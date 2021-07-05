@@ -1,9 +1,8 @@
-# hadolint ignore=DL3059
-
 ARG GO_VERSION
 
 FROM golang:${GO_VERSION}-buster AS build
 
+# hadolint ignore=DL3008
 RUN apt-get update && apt-get install --no-install-recommends -y unzip
 
 ARG GOLANG_PROTOBUF_VERSION
@@ -14,6 +13,7 @@ RUN GO111MODULE=on go get \
   github.com/golang/protobuf/protoc-gen-go@v${GOLANG_PROTOBUF_VERSION} && \
   mv /go/bin/protoc-gen-go* /usr/local/bin/
 
+# hadolint ignore=DL3059
 RUN curl -sSL \
   https://github.com/grpc-ecosystem/grpc-gateway/releases/download/v${GRPC_GATEWAY_VERSION}/protoc-gen-grpc-gateway-v${GRPC_GATEWAY_VERSION}-linux-x86_64 \
   -o /usr/local/bin/protoc-gen-grpc-gateway && \
@@ -25,6 +25,7 @@ RUN curl -sSL \
 
 WORKDIR /tmp/protoc
 
+# hadolint ignore=DL3059
 RUN curl -sSL \
   https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOBUF_VERSION}/protoc-${PROTOBUF_VERSION}-linux-x86_64.zip \
   -o /tmp/protoc/protoc.zip && \
